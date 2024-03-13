@@ -4,8 +4,14 @@ config.sampleRate = 44100; % [Hz]
 config.testSignal = 'sweep'; % {MLS, pinknoise, whitenoise, sweep}
 config.amplitude = 0.5; % [V] Test signal amplitude (V-RMS)
 config.numberOfRepeats = 1; % [-] an integer
-config.loopback = 0; % Do you want to use loopback compensation [1/0]
-config.measurementAngles = [0 10 20 30]; % [degreed] measurements angles
+config.loopback = 1; % Do you want to use loopback compensation [1/0]
+config.measurementAngles = 0:90:180; % [degreed] measurements angles
+
+stepperStepsPerDegree = 200/360;
+largeGearTeeth = 176;
+smallGearTeeth = 12;
+stepperStepSize = 1/32;
+config.stepsPerDegree = stepperStepsPerDegree*largeGearTeeth/smallGearTeeth/stepperStepSize;
 
 % Number of MLS taps n (MLS length = 2^(n-1) samples):
 % config.MLS.nMLS = -1;
