@@ -33,7 +33,7 @@ Set the speaker in the 'zero' position.
 
 Run
 
-   angular_measurement
+    angular_measurement
 
 A new directory will be made with several output file. The directory is Measurements/SOMEDATESTRING
 
