@@ -10,6 +10,12 @@ Clone MATAA from https://github.com/mbrennwa/mataa/tree/master
 
     git clone https://github.com/mbrennwa/mataa.git
 
+Info from BlacK_Chicken:
+
+Further, I have attached the precompiled playrec binary "playrec.mex" plus the modified "blockdevices.m". These files should replace the following files in your Octave installation directory: (keep the existing as a backup!)
+'%OCTAVE_PATH%\mingw64\lib\octave\packages\ltfat-2.3.1\x86_64-w64-mingw32-api-v53\playrec.mex'
+'%OCTAVE_PATH%\mingw64\share\octave\packages\ltfat-2.3.1\blockproc\blockdevices.m'
+
 ### NTKSPH
 Clone NTKSPH from https://github.com/TomKamphuys/NTKSPH
 
