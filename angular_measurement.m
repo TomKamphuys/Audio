@@ -38,9 +38,6 @@ for ind = 1:length(measurementAngles)
 
   stepper_move_to_position(measurementAngle, config);
 
-%  player = audioplayer(s0, fs, 24);
-%  playblocking(player);
-
   [h,t,unit] = mataa_measure_IR(s0,fs,Nrepeat,0.2,loopback,calfile,'V');
   audiowrite(sprintf("%s.%s",file, 'wav'), h, config.sampleRate);
 
