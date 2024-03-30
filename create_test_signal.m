@@ -32,6 +32,17 @@ switch (sig)
   case 'whitenoise'
     s0 = mataa_signal_generator ('white',fs,T); % white noise sequence of length T
 
+  case 'phase_controlled',
+    P = 10; % integer nr of octave
+    M = 8; % positive non-zero integer
+
+    L = M * pi * 2 * log(2^P) / (pi/2^P);
+
+    N = round(L); % chirp length
+
+    n = 0:N;
+    s0 = sin((pi./2.^P).*L./log(2.^P).*exp(n./N.*log(2.^P)));
+    T = 1;
 end
 
 U0rms = config.amplitude;

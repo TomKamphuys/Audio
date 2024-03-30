@@ -1,4 +1,4 @@
-function angular_measurement()
+function [measurementAngles, data] = angular_measurement()
 % Use this script for acoustic measurements of impulse response
 
 config = read_config();
@@ -6,7 +6,11 @@ config = read_config();
 Nrepeat = config.numberOfRepeats;
 loopback = config.loopback;
 measurementAngles = config.measurementAngles;
-fc=100;
+latency = config.latency;
+irDuration = config.irDuration;
+endIndex = irDuration*config.sampleRate;
+
+fc=config.fc;
 
 
 [s0, fs, T] = create_test_signal(config);
@@ -31,6 +35,8 @@ directory_name = datestr(now, 30);
 full_directory_name = [measurement_dir filesep directory_name];
 mkdir(full_directory_name);
 
+clear data;
+
 for ind = 1:length(measurementAngles)
   measurementAngle = measurementAngles(ind);
 
@@ -38,30 +44,16 @@ for ind = 1:length(measurementAngles)
 
   stepper_move_to_position(measurementAngle, config);
 
-  [h,t,unit] = mataa_measure_IR(s0,fs,Nrepeat,0.2,loopback,calfile,'V');
-  audiowrite(sprintf("%s.%s",file, 'wav'), h, config.sampleRate);
+  [h,t,unit] = mataa_measure_IR(s0,fs,Nrepeat,latency,loopback,calfile,'V');
+  hh = h(1:endIndex);
 
-  if ind == 1
-    [t_start,t_rise] = mataa_guess_IR_start(h,fs);
-  endif
- 	[hh,th] = mataa_signal_crop(h,fs,t_start-t_rise,t_start + 1/fc);
-  hh = detrend(hh);
-  [mag,phase,f,unit_mag] = mataa_IR_to_FR(h,fs,[],unit);
+  audiowrite(sprintf("%s.%s",file, 'wav'), hh, config.sampleRate);
 
-  comment = sprintf('hoek: %d', measurementAngle);
-
-  mataa_export_FRD(f,mag,phase,comment,file);
-  mataa_export_TMD(t, h, comment, file);
-
-%  semilogx(f, mag); %
-%	[mag,phase,f,unit_mag] = mataa_IR_to_FR (hh,fs,[],unit);
-
-% save frd file ? function mataa_export_FRD (f,mag,phase,comment,file);
+  data(:,ind) = hh;
 
 end
 
 stepper_finish(config);
-
 
 
 endfunction
