@@ -2,13 +2,6 @@ function grbl_wait_for_move_ready(grbl)
 
   grbl_send(grbl, 'G4 P0');
 
-  answer = char(fread(grbl));
-
-  while (length(strfind(answer, 'ok')) == 0)
-    pause(0.2);
-    answer = char(fread(grbl));
-  end
-
-  disp(answer);
+%  grbl_wait_for_ok(grbl);
 
 endfunction

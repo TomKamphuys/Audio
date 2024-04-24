@@ -1,10 +1,8 @@
-function result = grbl_send(serial, cmd)
+function result = grbl_send(grbl, cmd)
 
   disp(['>>> ' cmd]);
-  fprintf(serial, cmd);
-  pause(1);
+  fprintf(grbl, cmd);
 
-  result = char(fread(serial));
-  disp(result);
+  result = grbl_wait_for_ok(grbl);
 
 endfunction
