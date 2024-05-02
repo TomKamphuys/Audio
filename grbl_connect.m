@@ -16,7 +16,7 @@ function grbl = grbl_connect(com_port, baudrate)
 
   pause(2);
 
-  grbl_send(grbl, '$1=255'); % hold position
+  grbl_send(grbl, '$1=25'); % hold position
 
   % set resolution ( 200 steps per 2*pi*7 mm), speed and accel
 %  grbl_send(grbl, '$100=4.547');
